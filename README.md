@@ -1,7 +1,7 @@
 # RHAnimator
 Swift based fully customizable animation curves
 
-<img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385582-397455fe-82a6-11e7-8f45-b53eb5e1fb47.png">
+<img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385582-397455fe-82a6-11e7-8f45-b53eb5e1fb47.png" width="320" height="568">
 
 ## Overview
 
