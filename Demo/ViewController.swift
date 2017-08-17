@@ -80,7 +80,7 @@ class ViewController: UIViewController {
     private let defaultHue : CGFloat = 5 / 8.0
     private let maximumHueShift : CGFloat = 0.3
     
-    var animationDuration : TimeInterval = 1
+    fileprivate var animationDuration : TimeInterval = 1
     
     private var animationCurvePicker : UIPickerView? = nil
     
@@ -115,19 +115,29 @@ class ViewController: UIViewController {
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         // change layout between portrait + landscape orientations
-        let wasWideFormat : Bool = self.view.bounds.size.width > self.view.bounds.size.height
+        let wasWideFormat : Bool = self.isWide
         let isWideFormat : Bool = size.width > size.height
         if (isWideFormat != wasWideFormat){
-            self.rootStackView.axis = isWideFormat ? .horizontal : .vertical
+            self.setWideLayout(isWideFormat)
             if (self.animationCurvePicker != nil){
                 self.dismissPicker()
             }
         }
     }
     
+    // ensure UI uses horizontal layout if starting app out in horizontal orientation
+    override func viewDidLayoutSubviews() {
+        if (self.isWide){
+            self.setWideLayout(true)
+        }
+    }
+    
+    private func setWideLayout(_ wide: Bool){
+        self.rootStackView.axis = wide ? .horizontal : .vertical
+    }
     
     // MARK: Animations
-    func shakeCurve (shakes:Int) -> (RHAnimator.Interpolation){
+    private func shakeCurve (shakes:Int) -> (RHAnimator.Interpolation){
         return { (x : Double) in
             // implement back + forth shaking as a sine wave
             let waveCount : Double = Double(shakes)
@@ -142,13 +152,13 @@ class ViewController: UIViewController {
             return sineValue * damping
         }
     }
-    var animationCurve : RHAnimator.Interpolation {
+    private var animationCurve : RHAnimator.Interpolation {
         return self.animationCurveData[self.selectedCurveIndex][self.curveKey] as! RHAnimator.Interpolation
     }
-    var animationCurveDescription : String {
+    fileprivate var animationCurveDescription : String {
         return self.animationCurveData[self.selectedCurveIndex][self.titleKey] as! String
     }
-    var animationCurveEnum : DemoCurve {
+    private var animationCurveEnum : DemoCurve {
         return self.animationCurveData[self.selectedCurveIndex][self.enumKey] as! DemoCurve
     }
     private func beginAnimations(){
@@ -245,7 +255,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func createPicker() -> UIPickerView{
+    private func createPicker() -> UIPickerView{
         let picker : UIPickerView = UIPickerView();
         picker.showsSelectionIndicator = true
         picker.delegate = self
@@ -269,49 +279,54 @@ class ViewController: UIViewController {
         return picker
     }
     
-    var showHidePickerDuration : TimeInterval { return self.animationDuration/2 }
+    private var showHidePickerDuration : TimeInterval { return self.animationDuration/2 }
     
-    var pickerAnimationCurve : RHAnimator.Interpolation{
+    private var pickerAnimationCurve : RHAnimator.Interpolation{
         // Use our own animation util + custom curve for showing/hiding the picker
         let customCurve : RHAnimator.Interpolation = self.animationCurve
         return customCurve(1) == 1 ? customCurve : RHAnimationCurves.easeInOut
     }
     
+    private var isWide : Bool{
+        return self.view.bounds.width > self.view.bounds.height
+    }
     
-    func showPicker(){
+    private var pickerFrameOnScreen : CGRect{
+        var result : CGRect = CGRect(x: 0, y: self.rootStackView.frame.origin.y, width: self.view.bounds.width, height:self.rootStackView.bounds.height )
+        if (self.isWide){
+            result.origin.x = result.midX
+            result.size.width /= 2
+        }
+        else{
+            result.origin.y = result.midY
+            result.size.height /= 2
+        }
+        return result
+    }
+    private var pickerFrameOffScreen : CGRect{
+        var result : CGRect = self.pickerFrameOnScreen
+        if (self.isWide){
+            result.origin.x += result.width
+        }
+        else{
+            result.origin.y += result.height
+        }
+        return result
+    }
+    
+    private func showPicker(){
         if let picker = self.animationCurvePicker{
             picker.selectRow(self.selectedCurveIndex, inComponent: 0, animated: false)
             
-            // final position: bottom half or right half of screen, depending on 
-            //  orientation
-            let isWide : Bool = self.view.bounds.width > self.view.bounds.height
-            var toFrame : CGRect = self.view.bounds
-            toFrame.origin.y = self.rootStackView.frame.origin.y
-            toFrame.size.height -= toFrame.origin.y
-            if (isWide){
-                toFrame.origin.x = toFrame.midX
-                toFrame.size.width /= 2
-            }
-            else{
-                toFrame.origin.y = toFrame.midY
-                toFrame.size.height /= 2
-            }
-            
-            // original position: off the screen
-            var fromPosition : CGPoint = toFrame.origin
-            if (isWide){
-                fromPosition.x += toFrame.width
-            }
-            else{
-                fromPosition.y += toFrame.height
-            }
-            
-            picker.frame = CGRect(origin: fromPosition, size: toFrame.size)
+            let fromFrame : CGRect = self.pickerFrameOffScreen
+            let toFrame : CGRect = self.pickerFrameOnScreen
+
+            picker.frame = fromFrame
             self.view.addSubview(picker)
             
             // slide in. Bonus: use our own custom animation util for this.
             RHAnimator.animate(duration: self.showHidePickerDuration, curve: self.pickerAnimationCurve, animation: { (progress : Double) in
-                picker.frame.origin = RHAnimator.interpolate(from: fromPosition, to: toFrame.origin, at: progress)
+                picker.frame.origin = RHAnimator.interpolate(from: fromFrame.origin, to: toFrame.origin, at: progress)
             },completion:{
                 self.enableDismissPicker()
             })
@@ -334,15 +349,15 @@ class ViewController: UIViewController {
     }
     
     func dismissPicker(){
+        guard let picker = self.animationCurvePicker else { return }
         // slide picker down, using our own animation util
         self.view.isUserInteractionEnabled = false
         let curve : RHAnimator.Interpolation = self.pickerAnimationCurve
+        let fromFrame : CGRect = picker.frame
+        let toFrame : CGRect = self.pickerFrameOffScreen
         RHAnimator.animate(duration: self.animationDuration/2, curve: curve, animation: {
             (progress : Double) in
-            if let picker = self.animationCurvePicker{
-                let yOnscreen = self.view.bounds.height - picker.bounds.height
-                picker.frame.origin = CGPoint(x:0, y:yOnscreen + CGFloat(progress) * picker.bounds.height )
-            }
+            picker.frame.origin = RHAnimator.interpolate(from: fromFrame.origin, to: toFrame.origin, at: progress)
         }, completion: {
             self.animationCurvePicker?.removeFromSuperview()
             self.animationCurvePicker = nil
@@ -352,7 +367,7 @@ class ViewController: UIViewController {
         // remove dismiss gesture recognition
         if (self.dismissPickerTapRecognizer != nil)
         {
-            self.view.removeGestureRecognizer(self.dismissPickerTapRecognizer!)
+            self.view.removeGestureRecognizer( self.dismissPickerTapRecognizer! )
             self.dismissPickerTapRecognizer = nil
         }
     }
