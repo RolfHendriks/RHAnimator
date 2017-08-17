@@ -1,7 +1,8 @@
 # RHAnimator
 Swift based custom animations with fully customizable animation curves
 
-<img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385582-397455fe-82a6-11e7-8f45-b53eb5e1fb47.png" width="320" height="568">
+<img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385582-397455fe-82a6-11e7-8f45-b53eb5e1fb47.png" width="320" height="568"> 
+<img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29392928-e91d24ea-82ce-11e7-8d93-3b5965d3e15e.gif">
 
 ## Overview
 
@@ -38,11 +39,8 @@ Although RHAnimator could replace UIKit animations in a project, this is not the
 ## Custom Animation Curves
 
 <img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385580-39740842-82a6-11e7-9389-3aa7eba01932.png" width="320" height="568">
-
 <img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385584-3976edf0-82a6-11e7-9866-21a56b5bf187.png" width="320" height="568">
-
 <img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385582-397455fe-82a6-11e7-8f45-b53eb5e1fb47.png" width="320" height="568">
-
 <img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385585-397add16-82a6-11e7-9af7-35668877585a.png" width="320" height="568">
 
 
@@ -83,7 +81,7 @@ RHAnimator uses **CADisplayLink** internally to manage its timing for maximum pe
 
 ### Landscape Layout using UIStackView
 
-<img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385583-3974e5fa-82a6-11e7-8eba-cd668948e1e1.png" width="320" height="568">
+<img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385583-3974e5fa-82a6-11e7-8eba-cd668948e1e1.png" width="568" height="320">
 <img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385584-3976edf0-82a6-11e7-9866-21a56b5bf187.png" width="320" height="568">
 
 This demo uses an interesting layout trick to alter the UI in landscape orientation so that the function graph is on the right half of the screen instead of the bottom. This trick was inspired by experimenting with responsive web site design using CSS flex grids.
