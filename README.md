@@ -1,8 +1,8 @@
 # RHAnimator
 Swift based custom animations with fully customizable animation curves
 
-<img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385582-397455fe-82a6-11e7-8f45-b53eb5e1fb47.png" width="320" height="568"> 
-<img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29392928-e91d24ea-82ce-11e7-8d93-3b5965d3e15e.gif">
+<img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29392928-e91d24ea-82ce-11e7-8d93-3b5965d3e15e.gif"><img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385582-397455fe-82a6-11e7-8f45-b53eb5e1fb47.png" width="320" height="568"> 
+
 
 ## Overview
 
@@ -38,12 +38,6 @@ Although RHAnimator could replace UIKit animations in a project, this is not the
 
 ## Custom Animation Curves
 
-<img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385580-39740842-82a6-11e7-9389-3aa7eba01932.png" width="320" height="568">
-<img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385584-3976edf0-82a6-11e7-9866-21a56b5bf187.png" width="320" height="568">
-<img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385582-397455fe-82a6-11e7-8f45-b53eb5e1fb47.png" width="320" height="568">
-<img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385585-397add16-82a6-11e7-9af7-35668877585a.png" width="320" height="568">
-
-
 One of the main use cases for RHAnimator is to define custom animation curves. For example, to eject a view from the screen using an unusually strong acceleration, you could do this:
 
     let strongAcceleration : (Double)->Double = { x in return x*x*x }
@@ -58,17 +52,26 @@ If custom animation curves are your reason for using RHAnimator, **RHAnimationCu
 
 ### Exponential Deceleration / Slowdown
 
+<img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385580-39740842-82a6-11e7-9389-3aa7eba01932.png" width="320" height="568">
+
 An exponential deceleration curve is an excellent choice any time you want an object to come to rest from a moving state because it matches the physics of a real object slowing to a stop. iOS uses exponential deceleration curves when scroll views slow down, but unfortunately does not expose them in any API. So if you want to use exponential deceleration, RHAnimator combined with RHAnimationCurves.decelerate is one possible solution.
 
 ### Configurable Easing
+
+<img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385584-3976edf0-82a6-11e7-9866-21a56b5bf187.png" width="320" height="568">
 
 iOS defines curves for easing in, out, or both, but iOS's curves are subtle and not configurable. RHAnimationCurves defines paramterized easing functions that are similar, but allow the amount of easing to be configured to create more pronounced curves.
 
 ### Configurable Overshoot
 
+
+<img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385582-397455fe-82a6-11e7-8f45-b53eb5e1fb47.png" width="320" height="568">
+
 RHAnimationCurves.overshoot defines a parameterized overshoot curve that behaves very similar to UIKit's spring animation API. This custom overshoot implementation is unusually tweakable, allowing for an exact number of overshoots. And since RHAnimator can animate anything, the overshoot curve allows you to bring spring animations to unanimatable properties.
 
 ### UIKit Curve Replicas
+
+<img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385585-397add16-82a6-11e7-9af7-35668877585a.png" width="320" height="568">
 
 RHAnimationCurves defines exact replicas of UIKit's four animation curves (easeInOut, easeIn, easeOut, linear). These are useful if you want to apply a standard easing function to animate a custom property.
 
@@ -82,13 +85,12 @@ RHAnimator uses **CADisplayLink** internally to manage its timing for maximum pe
 ### Landscape Layout using UIStackView
 
 <img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385583-3974e5fa-82a6-11e7-8eba-cd668948e1e1.png" width="568" height="320">
-<img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385584-3976edf0-82a6-11e7-9866-21a56b5bf187.png" width="320" height="568">
 
-This demo uses an interesting layout trick to alter the UI in landscape orientation so that the function graph is on the right half of the screen instead of the bottom. This trick was inspired by experimenting with responsive web site design using CSS flex grids.
+The screen layout uses a two element **UIStackView** to lay out a 50/50 split between the bottom half of the screen, displaying a function graph, and the top half of the screen, displaying everything else. Stack views have a property to define their layout direction, so with this setup we can get a horizontal 50/50 split for landscape orientations by just changing a single property on a single view:
 
-The screen layout uses a two element **UIStackView** to lay out a 50/50 split between the bottom half of the screen, displaying a function graph, and the top half of the screen, displaying everything else.
-
-When the screen orientation changes, the stackView changes its layout direction. The result is that the 50/50 split is now horizontal, with the function graph to the right half of the screen and everything else to the left half. Thanks to UIStackView, this all happens by changing a single property on a single view.
+    private func setWideLayout(_ wide: Bool){
+        self.rootStackView.axis = wide ? .horizontal : .vertical
+    }
 
 ### Robust interpolations using the Interpolatable protocol
 
