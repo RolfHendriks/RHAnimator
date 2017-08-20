@@ -48,7 +48,7 @@ One of the main use cases for RHAnimator is to define custom animation curves. F
       view.transform = CGAffineTransform (translationX: CGFloat(progress * 100), y:0 )
     })
 
-In UIKit, we need to create animation curves by either selecting one of for predefined curves or listing key frames. In RHAnimator, an animation curve is simply a function, so you can implement any animation curve you want, often in a single line of code.
+In UIKit, we need to create animation curves by either selecting one of four predefined curves or listing key frames. In RHAnimator, an animation curve is simply a function, so you can implement any animation curve you want, often in a single line of code.
 
 If custom animation curves are your reason for using RHAnimator, **RHAnimationCurves** provides a wide variety of useful premade curves, which the demo app shows off in detail. Because this is a feature you may or may not need, RHAnimationCurves is a separate component from RHAnimator so that RHAnimator keeps its minimalist size.
 
