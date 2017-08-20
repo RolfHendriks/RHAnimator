@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E2541BB1F49F7260006C166 /* CurveContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2541B91F49F7260006C166 /* CurveContainerView.swift */; };
+		7E2541BE1F49F87A0006C166 /* DurationContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2541BD1F49F87A0006C166 /* DurationContainerView.swift */; };
+		7E2541C41F4A134F0006C166 /* AnimatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2541C31F4A134F0006C166 /* AnimatingView.swift */; };
 		7E25A9D51F3F889D00D440A2 /* RHFunctionGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E25A9D41F3F889D00D440A2 /* RHFunctionGraphView.swift */; };
 		7EB820A81F3DFF4F009CDD42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EB820A21F3DFF4F009CDD42 /* AppDelegate.swift */; };
 		7EB820A91F3DFF4F009CDD42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EB820A31F3DFF4F009CDD42 /* Assets.xcassets */; };
@@ -18,6 +21,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7E2541B91F49F7260006C166 /* CurveContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurveContainerView.swift; sourceTree = SOURCE_ROOT; };
+		7E2541BD1F49F87A0006C166 /* DurationContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DurationContainerView.swift; sourceTree = SOURCE_ROOT; };
+		7E2541C31F4A134F0006C166 /* AnimatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatingView.swift; sourceTree = SOURCE_ROOT; };
 		7E25A9D41F3F889D00D440A2 /* RHFunctionGraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RHFunctionGraphView.swift; sourceTree = SOURCE_ROOT; };
 		7EB820821F3DFD03009CDD42 /* RHAnimator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RHAnimator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EB820A21F3DFF4F009CDD42 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = SOURCE_ROOT; };
@@ -72,11 +78,14 @@
 			children = (
 				7EB820A21F3DFF4F009CDD42 /* AppDelegate.swift */,
 				7EB820A31F3DFF4F009CDD42 /* Assets.xcassets */,
+				7E2541B91F49F7260006C166 /* CurveContainerView.swift */,
+				7E2541BD1F49F87A0006C166 /* DurationContainerView.swift */,
 				7EB820A41F3DFF4F009CDD42 /* Info.plist */,
 				7EB820A51F3DFF4F009CDD42 /* LaunchScreen.storyboard */,
 				7EB820A61F3DFF4F009CDD42 /* Main.storyboard */,
-				7EB820A71F3DFF4F009CDD42 /* ViewController.swift */,
 				7E25A9D41F3F889D00D440A2 /* RHFunctionGraphView.swift */,
+				7EB820A71F3DFF4F009CDD42 /* ViewController.swift */,
+				7E2541C31F4A134F0006C166 /* AnimatingView.swift */,
 			);
 			name = Demo;
 			sourceTree = "<group>";
@@ -156,8 +165,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				7EB820B51F3E1722009CDD42 /* RHAnimationCurves.swift in Sources */,
+				7E2541C41F4A134F0006C166 /* AnimatingView.swift in Sources */,
 				7EB820AF1F3DFFA7009CDD42 /* RHAnimator.swift in Sources */,
+				7E2541BB1F49F7260006C166 /* CurveContainerView.swift in Sources */,
 				7EB820AD1F3DFF4F009CDD42 /* ViewController.swift in Sources */,
+				7E2541BE1F49F87A0006C166 /* DurationContainerView.swift in Sources */,
 				7E25A9D51F3F889D00D440A2 /* RHFunctionGraphView.swift in Sources */,
 				7EB820A81F3DFF4F009CDD42 /* AppDelegate.swift in Sources */,
 			);

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina5_5" orientation="portrait">
+    <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -19,20 +19,20 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="xeZ-j0-UTt">
-                                <rect key="frame" x="20" y="20" width="374" height="696"/>
+                                <rect key="frame" x="20" y="20" width="280" height="440"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="245" verticalHuggingPriority="245" horizontalCompressionResistancePriority="745" verticalCompressionResistancePriority="745" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="m4e-NZ-qYZ">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="338"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="280" height="210"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9ZD-BQ-CgM" userLabel="Curve">
-                                                <rect key="frame" x="0.0" y="0.0" width="374" height="74.666666666666671"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9ZD-BQ-CgM" userLabel="Curve" customClass="CurveContainerView" customModule="RHAnimator" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="280" height="42.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Curve:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uvl-OJ-TuX">
-                                                        <rect key="frame" x="0.0" y="8" width="63" height="58.666666666666671"/>
+                                                        <rect key="frame" x="0.0" y="8" width="63" height="26.5"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -41,7 +41,7 @@
                                                         </variation>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pEy-5x-cB9">
-                                                        <rect key="frame" x="71" y="21" width="303" height="33"/>
+                                                        <rect key="frame" x="71" y="5" width="209" height="33"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                         <state key="normal" title="Accelerate / Decelerate"/>
                                                         <variation key="heightClass=regular-widthClass=regular">
@@ -67,12 +67,15 @@
                                                         <exclude reference="1YT-HC-euV"/>
                                                     </mask>
                                                 </variation>
+                                                <connections>
+                                                    <outlet property="curveButton" destination="pEy-5x-cB9" id="CPy-B3-oQU"/>
+                                                </connections>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CPA-C2-FYf" userLabel="Duration">
-                                                <rect key="frame" x="0.0" y="74.666666666666657" width="374" height="73.999999999999972"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CPA-C2-FYf" userLabel="Duration" customClass="DurationView" customModule="RHAnimator" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="42.5" width="280" height="42"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Duration:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="POy-E3-xMF">
-                                                        <rect key="frame" x="0.0" y="4" width="63" height="61.999999999999986"/>
+                                                        <rect key="frame" x="0.0" y="4" width="63" height="30"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -81,7 +84,7 @@
                                                         </variation>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="1.0 sec" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xJg-0i-ztt">
-                                                        <rect key="frame" x="311" y="4" width="63" height="61.999999999999986"/>
+                                                        <rect key="frame" x="217" y="4" width="63" height="30"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -90,10 +93,7 @@
                                                         </variation>
                                                     </label>
                                                     <slider opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="245" verticalHuggingPriority="245" horizontalCompressionResistancePriority="745" verticalCompressionResistancePriority="745" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="1Q0-r7-YSR">
-                                                        <rect key="frame" x="69" y="19.333333333333329" width="235" height="31"/>
-                                                        <connections>
-                                                            <action selector="onAnimationSlider" destination="BYZ-38-t0r" eventType="valueChanged" id="OF7-fK-br6"/>
-                                                        </connections>
+                                                        <rect key="frame" x="69" y="3.5" width="141" height="31"/>
                                                     </slider>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -109,26 +109,36 @@
                                                     <constraint firstItem="xJg-0i-ztt" firstAttribute="bottom" secondItem="POy-E3-xMF" secondAttribute="bottom" id="oP5-ZI-TLv"/>
                                                     <constraint firstItem="xJg-0i-ztt" firstAttribute="leading" secondItem="1Q0-r7-YSR" secondAttribute="trailing" constant="9" id="sp2-j6-R2f"/>
                                                 </constraints>
+                                                <connections>
+                                                    <outlet property="durationLabel" destination="xJg-0i-ztt" id="Tno-pn-q0h"/>
+                                                    <outlet property="durationSlider" destination="1Q0-r7-YSR" id="B9d-UU-915"/>
+                                                </connections>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cBd-0V-7gt" userLabel="Spacer">
-                                                <rect key="frame" x="0.0" y="148.66666666666666" width="374" height="20"/>
+                                                <rect key="frame" x="0.0" y="84.5" width="280" height="20"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="5Mj-J6-zaw"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ciS-Hq-bro" userLabel="Translate">
-                                                <rect key="frame" x="0.0" y="168.66666666666663" width="374" height="74.333333333333343"/>
+                                                <rect key="frame" x="0.0" y="104.5" width="280" height="42.5"/>
                                                 <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WNT-v2-6Rt">
-                                                        <rect key="frame" x="149.66666666666666" y="0.0" width="75" height="74.333333333333343"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WNT-v2-6Rt" customClass="AnimatingView" customModule="RHAnimator" customModuleProvider="target">
+                                                        <rect key="frame" x="118.5" y="0.0" width="43" height="42.5"/>
                                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <accessibility key="accessibilityConfiguration" label="sliding box">
+                                                            <bool key="isElement" value="NO"/>
+                                                        </accessibility>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="WNT-v2-6Rt" secondAttribute="height" id="JbT-jd-4dy"/>
                                                         </constraints>
                                                     </view>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <accessibility key="accessibilityConfiguration" label="sliding box">
+                                                    <bool key="isElement" value="YES"/>
+                                                </accessibility>
                                                 <constraints>
                                                     <constraint firstAttribute="bottom" secondItem="WNT-v2-6Rt" secondAttribute="bottom" id="RlS-z6-vPz"/>
                                                     <constraint firstItem="WNT-v2-6Rt" firstAttribute="top" secondItem="ciS-Hq-bro" secondAttribute="top" id="bTo-Ff-Rtm"/>
@@ -136,38 +146,51 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lRk-md-lTk" userLabel="Spacer">
-                                                <rect key="frame" x="0.0" y="243" width="374" height="20"/>
+                                                <rect key="frame" x="0.0" y="147" width="280" height="20"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="hSI-HF-6oZ"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zp1-hE-ec1" userLabel="RotateScaleColor">
-                                                <rect key="frame" x="0.0" y="263" width="374" height="75"/>
+                                                <rect key="frame" x="0.0" y="167" width="280" height="43"/>
                                                 <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C8R-yE-dGN" userLabel="Rotate">
-                                                        <rect key="frame" x="0.0" y="0.0" width="75" height="75"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C8R-yE-dGN" userLabel="Rotate" customClass="AnimatingView" customModule="RHAnimator" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="43" height="43"/>
                                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <accessibility key="accessibilityConfiguration" label="rotating box">
+                                                            <bool key="isElement" value="YES"/>
+                                                        </accessibility>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="C8R-yE-dGN" secondAttribute="height" id="hO3-b0-by0"/>
                                                         </constraints>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Zp-Pg-fiB" userLabel="Color">
-                                                        <rect key="frame" x="299.66666666666674" y="0.0" width="74.333333333333314" height="75"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Zp-Pg-fiB" userLabel="Color" customClass="AnimatingView" customModule="RHAnimator" customModuleProvider="target">
+                                                        <rect key="frame" x="237.5" y="0.0" width="42.5" height="43"/>
                                                         <color key="backgroundColor" red="0.19892644557823125" green="0.39919483418367341" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <accessibility key="accessibilityConfiguration" label="color changing box">
+                                                            <bool key="isElement" value="YES"/>
+                                                        </accessibility>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="3Zp-Pg-fiB" secondAttribute="height" id="g49-El-4eE"/>
                                                         </constraints>
                                                     </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vec-UU-lL7" userLabel="Scale">
-                                                        <rect key="frame" x="149.66666666666666" y="0.0" width="75" height="75"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vec-UU-lL7" userLabel="Scale" customClass="AnimatingView" customModule="RHAnimator" customModuleProvider="target">
+                                                        <rect key="frame" x="118.5" y="0.0" width="43" height="43"/>
                                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <accessibility key="accessibilityConfiguration" label="scaling box">
+                                                            <bool key="isElement" value="YES"/>
+                                                        </accessibility>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="vec-UU-lL7" secondAttribute="height" id="QTF-ep-TgN"/>
                                                         </constraints>
                                                     </view>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <accessibility key="accessibilityConfiguration" label="animating box">
+                                                    <accessibilityTraits key="traits" none="YES"/>
+                                                    <bool key="isElement" value="NO"/>
+                                                </accessibility>
                                                 <constraints>
                                                     <constraint firstAttribute="bottom" secondItem="vec-UU-lL7" secondAttribute="bottom" id="FA8-Hj-6Di"/>
                                                     <constraint firstItem="vec-UU-lL7" firstAttribute="centerX" secondItem="Zp1-hE-ec1" secondAttribute="centerX" id="XC9-Wu-H5c"/>
@@ -189,14 +212,17 @@
                                         </constraints>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hRO-se-jy0" userLabel="GraphContainer">
-                                        <rect key="frame" x="0.0" y="358" width="374" height="338"/>
+                                        <rect key="frame" x="0.0" y="230" width="280" height="210"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kOc-v9-bsa" userLabel="Graph" customClass="RHFunctionGraphView" customModule="RHAnimator" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="20" width="374" height="318"/>
+                                                <rect key="frame" x="0.0" y="20" width="280" height="190"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <accessibility key="accessibilityConfiguration" label="function graph">
+                                            <bool key="isElement" value="YES"/>
+                                        </accessibility>
                                         <constraints>
                                             <constraint firstItem="kOc-v9-bsa" firstAttribute="leading" secondItem="hRO-se-jy0" secondAttribute="leading" id="R4j-wv-67K"/>
                                             <constraint firstAttribute="bottom" secondItem="kOc-v9-bsa" secondAttribute="bottom" id="Z9i-4V-kk9"/>
@@ -221,8 +247,10 @@
                     </view>
                     <connections>
                         <outlet property="animationCurveButton" destination="pEy-5x-cB9" id="Mc2-ga-mSt"/>
+                        <outlet property="animationCurveView" destination="9ZD-BQ-CgM" id="4lL-v7-ODQ"/>
                         <outlet property="animationDurationLabel" destination="xJg-0i-ztt" id="x6b-R9-ME9"/>
                         <outlet property="animationDurationSlider" destination="1Q0-r7-YSR" id="Kwl-M8-Y7r"/>
+                        <outlet property="animationDurationView" destination="CPA-C2-FYf" id="xHr-85-qXX"/>
                         <outlet property="colorAnimationView" destination="3Zp-Pg-fiB" id="qQt-GI-qve"/>
                         <outlet property="graphView" destination="kOc-v9-bsa" id="B6Y-TM-AXb"/>
                         <outlet property="rootStackView" destination="xeZ-j0-UTt" id="iKe-2h-KyV"/>

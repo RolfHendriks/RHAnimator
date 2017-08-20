@@ -12,7 +12,9 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var rootStackView: UIStackView!
+    @IBOutlet weak var animationCurveView : CurveContainerView!
     @IBOutlet weak var animationCurveButton: UIButton!
+    @IBOutlet weak var animationDurationView : DurationView!
     @IBOutlet weak var animationDurationTextField: UITextField!
     @IBOutlet weak var animationDurationStepper: UIStepper!
     @IBOutlet weak var animationDurationSlider: UISlider!
@@ -80,9 +82,11 @@ class ViewController: UIViewController {
     private let defaultHue : CGFloat = 5 / 8.0
     private let maximumHueShift : CGFloat = 0.3
     
-    fileprivate var animationDuration : TimeInterval = 1
-    
-    private var animationCurvePicker : UIPickerView? = nil
+    fileprivate var animationCurvePicker : UIPickerView? = nil
+    fileprivate var animationCurvePickerOverlay : UIView? = nil
+    fileprivate var animationDuration : TimeInterval{
+        return self.animationDurationView.value
+    }
     
     private var animation : RHAnimator? = nil
     // animations keep cycling: forward, back to center, backwards, back to center, etc
@@ -105,6 +109,7 @@ class ViewController: UIViewController {
             label.adjustsFontSizeToFitWidth = true
             label.minimumScaleFactor = 0.5
         }
+        self.animationDurationView.set(possibleDurations: [0.1, 0.2, 0.3, 0.4, 0.5, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0], duration: 1.0)
         // UI from Interface Builder and actual data may diverge. Let's treat
         //  our data as the source of truth and IB's values as placeholders:
         self.refreshAnimationCurveButton()
@@ -251,12 +256,11 @@ class ViewController: UIViewController {
         {
             self.animationCurvePicker = self.createPicker()
             self.showPicker()
-            self.setFunctionGraphVisible(false)
         }
     }
     
     private func createPicker() -> UIPickerView{
-        let picker : UIPickerView = UIPickerView();
+        let picker : UIPickerView = UIPickerView()
         picker.showsSelectionIndicator = true
         picker.delegate = self
         picker.dataSource = self
@@ -316,36 +320,65 @@ class ViewController: UIViewController {
     
     private func showPicker(){
         if let picker = self.animationCurvePicker{
+            // sync picker UI with selected curve
             picker.selectRow(self.selectedCurveIndex, inComponent: 0, animated: false)
             
+            // slide in. Bonus: use our own custom animation util for this.
             let fromFrame : CGRect = self.pickerFrameOffScreen
             let toFrame : CGRect = self.pickerFrameOnScreen
 
             picker.frame = fromFrame
             self.view.addSubview(picker)
             
-            // slide in. Bonus: use our own custom animation util for this.
             RHAnimator.animate(duration: self.showHidePickerDuration, curve: self.pickerAnimationCurve, animation: { (progress : Double) in
                 picker.frame.origin = RHAnimator.interpolate(from: fromFrame.origin, to: toFrame.origin, at: progress)
             },completion:{
                 self.enableDismissPicker()
+                // focus voice over on the picker when done
+                UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, self.animationCurvePicker)
             })
+            
+            // fade out function graph underneath the picker
+            self.setFunctionGraphVisible(false)
         }
     }
     
     var dismissPickerTapRecognizer : UITapGestureRecognizer?
-    func enableDismissPicker(){
-        // allow dismissing of picker
-        if ( self.dismissPickerTapRecognizer == nil )
-        {
-            self.dismissPickerTapRecognizer = UITapGestureRecognizer( target:self, action:#selector(onTapOutsidePicker) )
-        }
-        self.view.addGestureRecognizer( self.dismissPickerTapRecognizer! )
+    var dismissPickerView : UIView? {
+        //return UIApplication.shared.keyWindow!
+        return self.animationCurvePickerOverlay
     }
-    
-    func onTapOutsidePicker(){
-        self.dismissPicker()
-        self.setFunctionGraphVisible(true)
+    func enableDismissPicker(){
+        // add background view to enable tap outside to dismiss
+        if (self.animationCurvePickerOverlay == nil){
+            let overlay : UIView = UIView (frame: self.view.bounds)
+            overlay.backgroundColor = UIColor.clear
+            overlay.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            overlay.isAccessibilityElement = true
+            overlay.accessibilityLabel = "dismiss picker"
+            self.view.insertSubview(overlay, belowSubview: self.animationCurvePicker!)
+            self.animationCurvePickerOverlay = overlay
+            
+            self.dismissPickerTapRecognizer = UITapGestureRecognizer( target:self, action:#selector(dismissPicker) )
+            self.dismissPickerView!.addGestureRecognizer( self.dismissPickerTapRecognizer! )
+            
+            // disable voice over interaction for background UI elements. Instead, the only two 
+            // interactions are using the picker or dismissing it.
+            self.view.accessibilityElements = [overlay, self.animationCurvePicker!]
+        }
+    }
+    func disableDismissPicker(){
+        if (self.animationCurvePickerOverlay != nil)
+        {
+            self.dismissPickerView?.removeGestureRecognizer( self.dismissPickerTapRecognizer! )
+            self.dismissPickerTapRecognizer = nil
+            self.animationCurvePickerOverlay?.removeFromSuperview()
+            self.animationCurvePickerOverlay = nil
+            
+            // resume normal voice over interaction. This undoes previous locking of
+            // voice over interaction to just picker or dismiss picker
+            self.view.accessibilityElements = nil
+        }
     }
     
     func dismissPicker(){
@@ -362,27 +395,24 @@ class ViewController: UIViewController {
             self.animationCurvePicker?.removeFromSuperview()
             self.animationCurvePicker = nil
             self.view.isUserInteractionEnabled = true
+            // voice over - focus on curve picker
+            UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, self.animationCurveView)
         })
         
         // remove dismiss gesture recognition
-        if (self.dismissPickerTapRecognizer != nil)
-        {
-            self.view.removeGestureRecognizer( self.dismissPickerTapRecognizer! )
-            self.dismissPickerTapRecognizer = nil
-        }
+        self.disableDismissPicker()
+
+        // set function graph back to normal
+        self.setFunctionGraphVisible(true)
     }
     
-    // MARK: Animation Duration Slider
-    private lazy var durations : [TimeInterval] = {
-        [0.1, 0.2, 0.3, 0.4, 0.5, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0]
-    }()
-    @IBAction func onAnimationSlider() {
-        // snap to nearest defined duration
-        let stepCount : Int = self.durations.count-1
-        let closestStep : Int = Int(round (self.animationDurationSlider.value * Float(stepCount) ))
-        self.animationDurationSlider.value = Float(closestStep) / Float(stepCount)
-        self.animationDuration = self.durations[closestStep]
-        self.animationDurationLabel.text = "\(self.animationDuration) sec"
+    // support accessibilty escape gesture to dismiss picker
+    override func accessibilityPerformEscape() -> Bool {
+        if (self.animationCurvePicker != nil){
+            self.dismissPicker()
+            return true
+        }
+        return false
     }
     
     // MARK: Function graph
@@ -412,6 +442,9 @@ class ViewController: UIViewController {
         self.graphView.setDomainAndRange(CGRect(x: xMin, y: yMin, width: xMax-xMin, height: yMax-yMin))
         
         self.graphView.setFunction(self.animationCurve)
+        
+        // voice over accessibility
+        self.graphView.accessibilityValue = self.animationCurveDescription
     }
     
     func setFunctionGraphVisible(_ visible:Bool){
