@@ -1,7 +1,9 @@
 # RHAnimator
 Swift based custom animations with fully customizable animation curves
 
-<img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29392928-e91d24ea-82ce-11e7-8d93-3b5965d3e15e.gif"><img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385582-397455fe-82a6-11e7-8f45-b53eb5e1fb47.png" width="320" height="568"> 
+<img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29392928-e91d24ea-82ce-11e7-8d93-3b5965d3e15e.gif">
+
+<img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385582-397455fe-82a6-11e7-8f45-b53eb5e1fb47.png" width="320" height="568"> 
 
 
 ## Overview
@@ -78,10 +80,6 @@ RHAnimationCurves defines exact replicas of UIKit's four animation curves (easeI
 
 ## Technical Details
 
-### Using CADisplayLink
-
-RHAnimator uses **CADisplayLink** internally to manage its timing for maximum performance. CADisplayLink syncronizes with iOS's screen refreshing logic and guarantees that our animation logic gets called exactly once per screen update. This means that if iOS changes their refresh rate, as they have recently done with iOS11, RHAnimator will still work at full speed. And if the screen refresh rate is reduced to conserve battery life or because the system is overloaded, RHAnimator will slow down its updates automatically.
-
 ### Landscape Layout using UIStackView
 
 <img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385583-3974e5fa-82a6-11e7-8eba-cd668948e1e1.png" width="568" height="320">
@@ -91,6 +89,20 @@ The screen layout uses a two element **UIStackView** to lay out a 50/50 split be
     private func setWideLayout(_ wide: Bool){
         self.rootStackView.axis = wide ? .horizontal : .vertical
     }
+    
+### Accessibility
+
+Since the animation demo is also a code sample, and since accessibility is an area of interest of mine, the demo includes many details that enhance accessibility. Notice that:
+- Animation curve and animation duration sections behave like one large control for voice over users
+- Focus automatically switches to the curve picker as it slides in, and automatically switches back to the curve control as the picker slides out
+- While the animation curve picker is showing, the only two components available to a voice over user are the curve picker and a dismiss 'button'
+- Performing an accessibility escape gesture (two finger N shape) dismisses the animation curve picker
+- Animation duration has separate user visible vs voice over strings so that users hear 'two seconds', not 'two point zero sec'
+- Demo supports dynamic text sizes
+
+### Using CADisplayLink
+
+RHAnimator uses **CADisplayLink** internally to manage its timing for maximum performance. CADisplayLink syncronizes with iOS's screen refreshing logic and guarantees that our animation logic gets called exactly once per screen update. This means that if iOS changes their refresh rate, as they have recently done with iOS11, RHAnimator will still work at full speed. And if the screen refresh rate is reduced to conserve battery life or because the system is overloaded, RHAnimator will slow down its updates automatically.
 
 ### Robust interpolations using the Interpolatable protocol
 
