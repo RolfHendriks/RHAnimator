@@ -97,6 +97,7 @@ Since the animation demo is also a code sample, and since accessibility is an ar
 - Focus automatically switches to the curve picker as it slides in, and automatically switches back to the curve control as the picker slides out
 - While the animation curve picker is showing, the only two components available to a voice over user are the curve picker and a dismiss 'button'
 - Performing an accessibility escape gesture (two finger N shape) dismisses the animation curve picker
+- Animated boxes use custom accessibility frames so that box contents don't exceed their surrounding voice over box
 - Animation duration has separate user visible vs voice over strings so that users hear 'two seconds', not 'two point zero sec'
 - Demo supports dynamic text sizes
 
