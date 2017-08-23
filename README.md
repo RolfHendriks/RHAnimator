@@ -1,5 +1,4 @@
 # RHAnimator
-Swift based custom animations with fully customizable animation curves
 
 <img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29392928-e91d24ea-82ce-11e7-8d93-3b5965d3e15e.gif">
 
@@ -15,7 +14,7 @@ This project consists of three parts:
 
 ## RHAnimator Basics
 
-RHAnimator provides an extremely simple and flexible low level animation API that calls an update method once every animation frame. For example:
+RHAnimator is an extremely simple and flexible low level animation API that calls an update method once every animation frame. For example:
 
     RHAnimator.animate( duration:0.5 animations:
     {   
@@ -48,7 +47,7 @@ One of the main use cases for RHAnimator is to define custom animation curves. F
       view.transform = CGAffineTransform (translationX: CGFloat(progress * 100), y:0 )
     })
 
-In UIKit, we need to create animation curves by either selecting one of four predefined curves or listing key frames. In RHAnimator, an animation curve is simply a function, so you can implement any animation curve you want, often in a single line of code.
+Notice that in RHAnimator, easing curves are just functions. This gives you full freedom over defining your own curves, often in a single line of code. This is different from UIKit, where your options are to either select one of four presets or define keyframes.
 
 If custom animation curves are your reason for using RHAnimator, **RHAnimationCurves** provides a wide variety of useful premade curves, which the demo app shows off in detail. Because this is a feature you may or may not need, RHAnimationCurves is a separate component from RHAnimator so that RHAnimator keeps its minimalist size.
 
@@ -56,26 +55,25 @@ If custom animation curves are your reason for using RHAnimator, **RHAnimationCu
 
 <img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385580-39740842-82a6-11e7-9389-3aa7eba01932.png" width="320" height="568">
 
-An exponential deceleration curve is an excellent choice any time you want an object to come to rest from a moving state because it matches the physics of a real object slowing to a stop. iOS uses exponential deceleration curves when scroll views slow down, but unfortunately does not expose them in any API. So if you want to use exponential deceleration, RHAnimator combined with RHAnimationCurves.decelerate is one possible solution.
+An exponential deceleration curve matches the physics of a real object slowing to a stop, and so is an excellent choice any time you want an object to come to rest from a moving state because. iOS uses exponential deceleration curves when scroll views slow down, but unfortunately does not expose them in any API. So if you want to use exponential deceleration, RHAnimator combined with RHAnimationCurves.decelerate is one possible solution.
 
 ### Configurable Easing
 
 <img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385584-3976edf0-82a6-11e7-9866-21a56b5bf187.png" width="320" height="568">
 
-iOS defines curves for easing in, out, or both, but iOS's curves are subtle and not configurable. RHAnimationCurves defines paramterized easing functions that are similar, but allow the amount of easing to be configured to create more pronounced curves.
+iOS defines curves for easing in, out, or both, but iOS's curves are subtle and not configurable. RHAnimationCurves defines paramterized easing functions that allow the amount of easing to be configured to create more pronounced curves.
 
 ### Configurable Overshoot
 
-
 <img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385582-397455fe-82a6-11e7-8f45-b53eb5e1fb47.png" width="320" height="568">
 
-RHAnimationCurves.overshoot defines a parameterized overshoot curve that behaves very similar to UIKit's spring animation API. This custom overshoot implementation is unusually tweakable, allowing for an exact number of overshoots. And since RHAnimator can animate anything, the overshoot curve allows you to bring spring animations to unanimatable properties.
+RHAnimationCurves.overshoot defines a parameterized overshoot curve that uses harmonic oscillation physics and behaves like UIKit's spring animation API. RHAnimationCurves.overshoot is easier to tweak though, allowing you to define an exact number of overshoots. And since RHAnimator can animate anything, the overshoot curve allows you to bring spring animations to unanimatable properties.
 
 ### UIKit Curve Replicas
 
 <img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385585-397add16-82a6-11e7-9af7-35668877585a.png" width="320" height="568">
 
-RHAnimationCurves defines exact replicas of UIKit's four animation curves (easeInOut, easeIn, easeOut, linear). These are useful if you want to apply a standard easing function to animate a custom property.
+RHAnimationCurves defines exact replicas of UIKit's four animation curves - easeInOut, easeIn, easeOut, linear. These are useful if you want to apply a standard easing function to animate a custom property.
 
 
 ## Technical Details
@@ -84,7 +82,7 @@ RHAnimationCurves defines exact replicas of UIKit's four animation curves (easeI
 
 <img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385583-3974e5fa-82a6-11e7-8eba-cd668948e1e1.png" width="568" height="320">
 
-The screen layout uses a two element **UIStackView** to lay out a 50/50 split between the bottom half of the screen, displaying a function graph, and the top half of the screen, displaying everything else. Stack views have a property to define their layout direction, so with this setup we can get a horizontal 50/50 split for landscape orientations by just changing a single property on a single view:
+The screen layout uses a two element **UIStackView** to lay out a 50/50 split between the bottom half of the screen, displaying a function graph, and the top half of the screen, displaying everything else. Because stack views have a property to define their layout direction, we can lay out a horizontal 50/50 split for landscape orientations by just changing a single property on a single view:
 
     private func setWideLayout(_ wide: Bool){
         self.rootStackView.axis = wide ? .horizontal : .vertical
@@ -94,7 +92,7 @@ The screen layout uses a two element **UIStackView** to lay out a 50/50 split be
 
 Since the animation demo is also a code sample, and since accessibility is an area of interest of mine, the demo includes many details that enhance accessibility. Notice that:
 - Animation curve and animation duration sections behave like one large control for voice over users
-- Focus automatically switches to the curve picker as it slides in, and automatically switches back to the curve control as the picker slides out
+- Voice over focus automatically switches to the curve picker as it slides in, and automatically switches back to the curve control as the picker slides out
 - While the animation curve picker is showing, the only two components available to a voice over user are the curve picker and a dismiss 'button'
 - Performing an accessibility escape gesture (two finger N shape) dismisses the animation curve picker
 - Animated boxes use custom accessibility frames so that they stay inside their voice over frame while animating
@@ -113,7 +111,7 @@ A typical C approach might look like this:
 
     #define interpolate( from,to,at ) ((from)*(1-at) + (to)*(at))
 
-It's a concise solution, but also unsafe, inflexible, and unSwifty. Instead, RHAnimator formalizes the idea of interpolation into a protocol:
+It's a concise solution, but also unsafe, inflexible, and not Swift compatible. Instead, RHAnimator formalizes the idea of interpolation into a minimalist Swift protocol:
 
     protocol Interpolatable{
       static func + (lhs: Self, rhs:Self) -> Self
