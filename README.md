@@ -55,7 +55,7 @@ If custom animation curves are your reason for using RHAnimator, **RHAnimationCu
 
 <img alt="RHAnimator screenshot" src="https://user-images.githubusercontent.com/539554/29385580-39740842-82a6-11e7-9389-3aa7eba01932.png" width="320" height="568">
 
-An exponential deceleration curve matches the physics of a real object slowing to a stop, and so is an excellent choice any time you want an object to come to rest from a moving state because. iOS uses exponential deceleration curves when scroll views slow down, but unfortunately does not expose them in any API. So if you want to use exponential deceleration, RHAnimator combined with RHAnimationCurves.decelerate is one possible solution.
+An exponential deceleration curve matches the physics of a real object slowing to a stop, and so is an excellent choice any time you want an object to come to rest from a moving state. iOS uses exponential deceleration curves when scroll views slow down, but unfortunately does not expose them in any API. So if you want to use exponential deceleration, RHAnimator combined with RHAnimationCurves.decelerate is one possible solution.
 
 ### Configurable Easing
 
