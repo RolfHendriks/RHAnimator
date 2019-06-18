@@ -132,3 +132,4 @@ RHAnimationCurves defines not just curves, but methods for generating curves mor
         let decelerate : (Double)->Double = self.opposite(function: accelerate)
         return self.compose( accelerate, decelerate )
     }
+    
